@@ -10,7 +10,7 @@ def generate_launch_description():
     share_dir = get_package_share_directory("lio_sam")
     parameter_file = LaunchConfiguration("params_file")
     rviz_config_file = os.path.join(share_dir, "config", "rviz2.rviz")
-    xacro_path = os.path.join(share_dir, "config", "robot.urdf.xacro")
+    xacro_path = os.path.join(share_dir, "config", "robot_rosbag.urdf.xacro")
     print("urdf_file_name : {}".format(xacro_path))
     params_declare = DeclareLaunchArgument(
         "params_file",
@@ -28,7 +28,7 @@ def generate_launch_description():
                 output="screen",
                 parameters=[
                     {
-                        "use_sim_time": False,
+                        "use_sim_time": True,
                     }
                 ],
             ),
@@ -40,7 +40,7 @@ def generate_launch_description():
                 parameters=[
                     {
                         "robot_description": Command(["xacro", " ", xacro_path]),
-                        "use_sim_time": False,
+                        "use_sim_time": True,
                     }
                 ],
             ),
@@ -75,7 +75,7 @@ def generate_launch_description():
             Node(
                 package="rviz2",
                 executable="rviz2",
-                name="rviz2",
+                name="rviz24",
                 arguments=["-d", rviz_config_file],
                 output="screen",
             ),

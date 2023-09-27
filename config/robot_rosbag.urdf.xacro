@@ -3,10 +3,13 @@
   xmlns:xacro="http://tixiaoshan.github.io/">
   <xacro:property name="PI" value="3.1415926535897931" />
 
+  <xacro:arg name="use_nominal_extrinsics" default="true" />
+  <xacro:include filename="$(find realsense2_description)/urdf/_d435i.urdf.xacro"/>
+
   <link name="base_link"></link>
   <link name="os_sensor"></link>
+  <link name="os_lidar"></link>
   <link name="imu_link"></link>
-  <link name="camera_link"></link>
 
   <joint name="lidar_joint" type="fixed">
     <parent link="base_link" />
@@ -20,11 +23,14 @@
     <origin xyz="0.0 -0.08 -0.15" rpy="0 0 0" />
   </joint>
 
-  <joint name="cam_joint" type="fixed">
+  <joint name="os_joint" type="fixed">
     <parent link="os_sensor" />
-    <child link="camera_link" />
-    <origin xyz="0.1 0.0 -0.4" rpy="0 0 0" />
+    <child link="os_lidar" />
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 3.14" />
   </joint>
 
+  <xacro:sensor_d435i parent="os_sensor" use_nominal_extrinsics="$(arg use_nominal_extrinsics)">
+    <origin xyz="0.2 0.0 -0.3" rpy="0 0 0"/>
+  </xacro:sensor_d435i>
 
 </robot>
